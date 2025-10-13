@@ -1,0 +1,32 @@
+# Server configuration
+server:
+  port: 8082
+
+# Spring Boot application configuration
+spring:
+  application:
+    name: auth-demo-api
+
+mybatis:
+  type-aliases-package: com.sport.sports_reservations.mapper
+
+# Custom application configuration
+app:
+  cors:
+    # CORS allowed origins for frontend integration
+    # Set ALLOWED_ORIGINS environment variable with frontend domain
+    # Default: http://localhost:3000 (for local development)
+    allowed-origins: ${ALLOWED_ORIGINS:http://localhost:4200}
+
+# Spring Boot Actuator configuration for monitoring and health checks
+management:
+  endpoints:
+    web:
+      exposure:
+        # Expose health and info endpoints for monitoring
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        # Enable health probes for container orchestration (Kubernetes, Docker)
+        enabled: true			

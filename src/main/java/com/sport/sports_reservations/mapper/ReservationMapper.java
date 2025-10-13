@@ -1,4 +1,4 @@
-package com.sport.sports_reservations.booking.mapper;
+package com.sport.sports_reservations.mapper;
 
 import java.util.List;
 

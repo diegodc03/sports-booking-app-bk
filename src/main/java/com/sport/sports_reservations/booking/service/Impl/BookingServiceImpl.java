@@ -6,11 +6,12 @@ import java.util.Optional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.sport.sports_reservations.booking.mapper.ReservationMapper;
+
 import com.sport.sports_reservations.booking.model.Reservation;
 import com.sport.sports_reservations.booking.service.BookingService;
+import com.sport.sports_reservations.mapper.ReservationMapper;
 
-import jakarta.transaction.Transactional;
+
 
 @Service
 public class BookingServiceImpl implements BookingService {
@@ -39,7 +40,7 @@ public class BookingServiceImpl implements BookingService {
         reservationMapper.insert(reservation);
     }
 
-    @Transactional
+    
     public Reservation updateReservation(Integer id, Reservation updated) {
         Reservation existing = reservationMapper.findById(id);
 

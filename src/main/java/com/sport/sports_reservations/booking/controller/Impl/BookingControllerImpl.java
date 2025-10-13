@@ -6,7 +6,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import com.sport.sports_reservations.booking.DTO.ReservationDto;
 import com.sport.sports_reservations.booking.controller.BookingController;
 import com.sport.sports_reservations.booking.model.Reservation;
 import com.sport.sports_reservations.booking.service.BookingService;
@@ -26,4 +29,13 @@ public class BookingControllerImpl implements BookingController{
 		return ResponseEntity.ok(reservations);
 	}
 
+	
+	@PostMapping("/reservation")
+	public ResponseEntity<Void> postNewReservation(@RequestBody ReservationDto reservation) {
+		
+		return null;
+		
+	}
+	
+	
 }

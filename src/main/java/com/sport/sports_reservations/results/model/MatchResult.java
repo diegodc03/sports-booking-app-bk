@@ -9,15 +9,6 @@ import com.sport.sports_reservations.booking.model.Facility;
 import com.sport.sports_reservations.booking.model.Reservation;
 import com.sport.sports_reservations.booking.model.Sport;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -27,21 +18,17 @@ import lombok.Setter;
 
 
 //---------- MATCH RESULTS ----------
-@Entity
 @Getter
 @Setter
-@Table(name = "match_results")
+
 public class MatchResult {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Integer id;
 
-    @ManyToOne(optional = false) // una reserva siempre pertenece a una instalación
-    @JoinColumn(name = "facility_id", nullable = false)
+
     private Facility facility;
 
-    @ManyToOne(optional = false) // una reserva siempre tiene un usuario
-    @JoinColumn(name = "user_id", nullable = false)
+
     private User user;
 
     @NotNull(message = "La fecha es obligatoria")
@@ -56,13 +43,81 @@ public class MatchResult {
             message = "El estado debe ser PENDING, CONFIRMED o CANCELLED")
     private String status;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "reservation_id", nullable = false)
+
     private Reservation reservation;
     
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "sport_id", nullable = false)
+
     private Sport sport;
+
+    
+    
+    
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Facility getFacility() {
+		return facility;
+	}
+
+	public void setFacility(Facility facility) {
+		this.facility = facility;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public LocalDate getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDate date) {
+		this.date = date;
+	}
+
+	public LocalTime getHour() {
+		return hour;
+	}
+
+	public void setHour(LocalTime hour) {
+		this.hour = hour;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Reservation getReservation() {
+		return reservation;
+	}
+
+	public void setReservation(Reservation reservation) {
+		this.reservation = reservation;
+	}
+
+	public Sport getSport() {
+		return sport;
+	}
+
+	public void setSport(Sport sport) {
+		this.sport = sport;
+	}
+    
+    
+    
     
     
     
