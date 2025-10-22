@@ -1,8 +1,11 @@
-package com.sport.sports_reservations.booking.DTO;
+package com.sport.sports_reservations.booking.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+
+import com.sport.sports_reservations.auth.model.UserDTO;
+import com.sport.sports_reservations.results.model.MatchResultDTO;
 
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
@@ -11,17 +14,17 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 
+//---------- RESERVATIONS ----------
 @Getter
 @Setter
-public class ReservationDto {
+public class ReservationDTO {
 
     private Integer id;
 
-    @NotNull(message = "El ID de la instalación es obligatorio")
-    private Integer facilityId;
 
-    @NotNull(message = "El ID del usuario es obligatorio")
-    private Integer userId;
+    private FacilityDTO facility;
+
+    private UserDTO user;
 
     @NotNull(message = "La fecha es obligatoria")
     @FutureOrPresent(message = "La fecha no puede ser en el pasado")
@@ -32,12 +35,14 @@ public class ReservationDto {
 
     @NotBlank(message = "El estado no puede estar vacío")
     @Pattern(regexp = "^(PENDING|CONFIRMED|CANCELLED)$",
-             message = "El estado debe ser PENDING, CONFIRMED o CANCELLED")
+            message = "El estado debe ser PENDING, CONFIRMED o CANCELLED")
     private String status;
 
-    // Opcional: IDs de resultados asociados
-    private List<Integer> matchResultIds;
-	
-	
-	
+    private List<MatchResultDTO> matchResults;
+
+    
+        
+
+
 }
+

@@ -10,19 +10,18 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Facility {
+public class FacilityDTO {
 
 	private Integer id;
 
-	private City city;
+	private CityDTO city;
 	
-
-	private Sport sport;
+	private SportDTO sport;
 	
 	private String name;
 	private Integer capacity;
 	
-	private List<Reservation> reservations;
+	private List<ReservationDTO> reservations;
 	
 	
 }

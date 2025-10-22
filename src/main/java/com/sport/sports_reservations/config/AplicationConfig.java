@@ -14,7 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.sport.sports_reservations.auth.model.Role;
-import com.sport.sports_reservations.auth.model.User;
+import com.sport.sports_reservations.auth.model.UserDTO;
 import com.sport.sports_reservations.mapper.UserMapper;
 
 
@@ -32,11 +32,11 @@ public class AplicationConfig {
     @Bean
     public UserDetailsService userDetailsService(){
     	return username -> {
-            User user = userRepository.findByEmail(username)
+            UserDTO user = userRepository.findByEmail(username)
                             .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
             List<Role> roles = userRepository.findRolesByUserId(user.getId());
-            user.setRole(roles);
+            user.setRoles(roles);
 
             return user; 
         };

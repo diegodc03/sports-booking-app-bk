@@ -2,8 +2,6 @@ package com.sport.sports_reservations.auth.service;
 
 
 import lombok.Builder;
-import lombok.RequiredArgsConstructor;
-
 import java.util.List;
 
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,7 +13,7 @@ import org.springframework.stereotype.Service;
 import com.sport.sports_reservations.auth.dto.AuthenticacionRequest;
 import com.sport.sports_reservations.auth.dto.AuthenticationResponse;
 import com.sport.sports_reservations.auth.dto.RegisterRequest;
-import com.sport.sports_reservations.auth.model.User;
+import com.sport.sports_reservations.auth.model.UserDTO;
 import com.sport.sports_reservations.config.JwtService;
 import com.sport.sports_reservations.mapper.UserMapper;
 import com.sport.sports_reservations.mapper.RoleMapper;
@@ -41,23 +39,21 @@ public class AuthenticationService {
     public AuthenticationResponse register(RegisterRequest request) {
     	var role = roleMapper.findByRoleName("USER");
     	
-    	User user = new User();
+    	UserDTO user = new UserDTO();
     	user.setFirstname(request.getFirstname());
     	user.setLastName(request.getLastname());
     	user.setEmail(request.getEmail());
     	user.setPassword(passwordEncoder.encode(request.getPassword()));
     	user.setTelephone(request.getTelephone());
-    	user.setRole(List.of(role));
+    	user.setRoles(List.of(role));
     	
         userMapper.insert(user);
-        
-
+       
         if (role != null) {
         	userMapper.insertUserRole(user.getId(), role.getId());
         } else {
             throw new RuntimeException("No existe el rol: " + "USER");
         }
-        
         
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
@@ -75,7 +71,7 @@ public class AuthenticationService {
         var user = userMapper.findByEmail(request.getEmail())
                 .orElseThrow();
         var roles = userMapper.findRolesByUserId(user.getId());
-        user.setRole(roles);
+        user.setRoles(roles);
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
