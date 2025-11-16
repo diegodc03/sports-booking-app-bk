@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.sport.sports_reservations.auth.dto.AuthenticacionRequest;
 import com.sport.sports_reservations.auth.dto.AuthenticationResponse;
 import com.sport.sports_reservations.auth.dto.RegisterRequest;
+import com.sport.sports_reservations.auth.model.Role;
 import com.sport.sports_reservations.auth.model.UserDTO;
 import com.sport.sports_reservations.config.JwtService;
 import com.sport.sports_reservations.mapper.UserMapper;
@@ -39,6 +40,8 @@ public class AuthenticationService {
     public AuthenticationResponse register(RegisterRequest request) {
     	var role = roleMapper.findByRoleName("USER");
     	
+    	checkPassword(request.getPassword(), request.getConfirmPassword());
+    	
     	UserDTO user = new UserDTO();
     	user.setFirstname(request.getFirstname());
     	user.setLastName(request.getLastname());
@@ -61,6 +64,12 @@ public class AuthenticationService {
                 .build();
     }
 
+    public void checkPassword(String password, String confirmPassword) {
+		if (!password.equals(confirmPassword)) {
+			throw new IllegalArgumentException("Las contraseñas no coinciden");
+		}
+	}
+    
     public AuthenticationResponse authenticate(AuthenticacionRequest request) {
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
@@ -70,11 +79,21 @@ public class AuthenticationService {
         );
         var user = userMapper.findByEmail(request.getEmail())
                 .orElseThrow();
+        
         var roles = userMapper.findRolesByUserId(user.getId());
+        
         user.setRoles(roles);
+        
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
+                .user(user)
                 .build();
     }
+    
+    
+	private boolean hasRole(List<Role> roles, String roleName) {
+	    return roles.stream().anyMatch(r -> r.getRoleName().equalsIgnoreCase(roleName));
+	}
+
 }

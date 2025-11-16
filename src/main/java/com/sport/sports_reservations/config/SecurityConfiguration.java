@@ -54,6 +54,7 @@ public class SecurityConfiguration {
 //                        .requestMatchers("/api/v1/auth/**").hasRole("ADMIN")
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers("/api/v1/booking/**").permitAll()
+                        .requestMatchers("/api/v1/reservation/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

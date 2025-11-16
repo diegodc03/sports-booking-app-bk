@@ -15,8 +15,17 @@ import com.sport.sports_reservations.auth.model.UserDTO;
 @Mapper
 public interface UserMapper {
 
-    @Select("SELECT id, email, password FROM users WHERE email = #{email}")
-    Optional<UserDTO> findByEmail(String email);
+	@Select("""
+		    SELECT 
+		        id, 
+		        email, 
+		        password, 
+		        first_name AS firstname,  /* <-- ¡CAMBIO AQUÍ! */
+		        last_name AS lastName     /* <-- También aplica para last_name */
+		    FROM users 
+			WHERE email = #{email}
+	""")
+	Optional<UserDTO> findByEmail(String email);
 
     @Insert("""
             INSERT INTO users(email, password, first_name, last_name, telephone)

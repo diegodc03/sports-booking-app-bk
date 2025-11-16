@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    
+<mapper namespace="com.sport.sports_reservations.booking.sports.mapper">
+
+	<resultMap id="SportsResultMap" type="com.sport.sports_reservations.booking.model.SportDTO">
+        <id property="id" column="id"/>
+        <result property="sportName" column="sport_name"/>
+        <result property="maxPlayers" column="max_players"/>
+    </resultMap>
+    
+    
+    <select id="findSportsByCityId" resultMap="SportsResultMap">
+        SELECT 
+        	s.sport_id, 
+        	s.sport_name, 
+        	s.max_players
+        FROM sports s
+        JOIN city_sports cs ON cs.sport_id = s.sport_id
+        WHERE cs.city_id = #{cityId}
+   	</select>
+   	
+   	
+   	<select id="findSportsByCityId" resultMap="SportsResultMap">
+        SELECT 
+        	s.sport_id, 
+        	s.sport_name, 
+        	s.max_players
+        FROM sports s
+        JOIN city_sports cs ON cs.sport_id = s.sport_id
+        WHERE cs.city_id = #{cityId}
+   	</select>
+
+</mapper>
