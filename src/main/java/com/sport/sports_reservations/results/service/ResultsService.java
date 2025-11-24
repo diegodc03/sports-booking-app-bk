@@ -1,10 +1,12 @@
 package com.sport.sports_reservations.results.service;
 
-import com.sport.sports_reservations.results.model.MatchResultDTO;
+import java.util.List;
+
+import com.sport.sports_reservations.results.model.MatchResult;
 
 public interface ResultsService {
 
-	String getAllResults();
+	List<MatchResult> getAllResults();
 	
-	String addResult(MatchResultDTO result);
+	String addResult(MatchResult result);
 }

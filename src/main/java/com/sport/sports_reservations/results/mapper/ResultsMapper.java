@@ -6,36 +6,39 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
 import com.sport.sports_reservations.booking.sports.model.SportDTO;
-import com.sport.sports_reservations.results.model.MatchResultDTO;
+import com.sport.sports_reservations.results.model.MatchResult;
 
 public interface ResultsMapper {
 
 	
 	@Select("""
+
 			SELECT
-			    id,
-			    facility_name,
-			    city_name,
-			    sport_name,
-			    date,
-			    hour,
-			    result AS match_result 
-			FROM reservations
-			LEFT JOIN match_results ON id = reservation_id
-			LEFT JOIN facilities ON facilities.facility_id = reservations.id
-			LEFT JOIN sports ON sports.sport_id = facilities.sport_id
-			LEFT JOIN cities ON cities.city_id = facilities.city_id
-			WHERE user_id = #{UserId}
-			    AND status = 'PENDING'
-			""")
-	List<SportDTO> findReservationsByUser(Integer UserId);
+			    (r.date::text || ' ' || r.hour::text) AS "dateTime",
+			    f.facility_name AS "facilityName", 
+			    s.sport_name AS "sportName",
+			    c.city_name AS "cityName",
+			    COALESCE(mr.result, 'Pendiente') AS "result"
+			    
+			FROM public.reservations r
+			JOIN public.facilities f ON r.facility_id = f.facility_id
+			JOIN public.sports s ON f.sport_id = s.sport_id
+			JOIN public.cities c ON f.city_id = c.city_id
+			LEFT JOIN public.match_results mr ON r.id = mr.reservation_id
+			
+			WHERE r.user_id = #{userId}
+			ORDER BY 
+			    r.date DESC, r.hour DESC; -- Ordenar por fecha más reciente
+			""")	
+	List<MatchResult> findReservationsByUser(Long userId);
+	
 	
 	
 	@Insert("""
 			INSERT INTO match_results(reservation_id, result)
-			VALUES(#{reservation_id}, #{result})
+			VALUES(#{reservation_id}, #{matchResult})
 		""")
-	void insertMatchResult(MatchResultDTO matchResult);
+	void insertMatchResult(MatchResult matchResult);
 	
 	
 	
