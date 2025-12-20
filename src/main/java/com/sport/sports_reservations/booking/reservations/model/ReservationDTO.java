@@ -8,7 +8,6 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sport.sports_reservations.auth.model.UserDTO;
 import com.sport.sports_reservations.booking.facility.model.FacilityDTO;
-import com.sport.sports_reservations.results.model.MatchResultDTO;
 
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
@@ -43,7 +42,6 @@ public class ReservationDTO {
             message = "El estado debe ser PENDING, CONFIRMED o CANCELLED")
     private String status;
 
-    private List<MatchResultDTO> matchResults;
       
 }
 

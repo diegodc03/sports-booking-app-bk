@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
-import com.sport.sports_reservations.booking.sports.model.SportDTO;
 import com.sport.sports_reservations.results.model.MatchResult;
 
 public interface ResultsMapper {
