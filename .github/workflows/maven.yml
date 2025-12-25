@@ -77,9 +77,9 @@ jobs:
 
     steps:
     - name: Tailscale Connect
-      #uses: tailscale/github-action@v2
+      uses: tailscale/github-action@v2
       with:
-        #oauth-client-id: ${{ secrets.CLIENT_ID_TAILSCALE }}
+        oauth-client-id: ${{ secrets.CLIENT_ID_TAILSCALE }}
         oauth-secret: ${{ secrets.CLIENT_SECRET_TAILSCALE }}
         tags: tag:ci-runner
         version: 1.88.1
