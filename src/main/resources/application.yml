@@ -1,11 +1,17 @@
 # Server configuration
 server:
-  port: 8082
+  port: 8080
+
 
 # Spring Boot application configuration
 spring:
   application:
     name: auth-demo-api
+  web.cors:
+            allowed-origins: "*"
+            allowed-methods: "*"
+            allowed-headers: "*"
+            allow-credentials: true
 
 mybatis:
   type-aliases-package: com.sport.sports_reservations.mapper
