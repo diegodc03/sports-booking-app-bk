@@ -115,7 +115,7 @@ jobs:
           echo "🔵 Run backend"
           docker run -d \
             --name $CONTAINER_NAME \
-            -p 8081:8080 \
+            -p 8080:8080 \
             --restart always \
             -e SPRING_PROFILES_ACTIVE=prod \
             -e DB_HOST=${{ secrets.DB_HOST }} \
