@@ -40,6 +40,10 @@ public class AuthenticationService {
     public AuthenticationResponse register(RegisterRequest request) {
     	var role = roleMapper.findByRoleName("USER");
     	
+    	if (role == null) {
+            throw new RuntimeException("Error: No existe el rol 'USER' en la base de datos.");
+        }
+    	
     	checkPassword(request.getPassword(), request.getConfirmPassword());
     	
     	UserDTO user = new UserDTO();
@@ -51,12 +55,7 @@ public class AuthenticationService {
     	user.setRoles(List.of(role));
     	
         userMapper.insert(user);
-       
-        if (role != null) {
-        	userMapper.insertUserRole(user.getId(), role.getId());
-        } else {
-            throw new RuntimeException("No existe el rol: " + "USER");
-        }
+        userMapper.insertUserRole(user.getId(), role.getId());
         
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
